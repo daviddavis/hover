@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["ddavis1@gmail.com"]
   spec.description   = %q{Hover.com API gem}
   spec.summary       = %q{Gem for using Hover.com's API.}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/daviddavis/hover"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
