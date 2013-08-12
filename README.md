@@ -44,3 +44,8 @@ irb -Ilib -rhover
 > api.domains
 # Hash with domains
 ```
+
+## Acknowledgements
+
+* Thanks to [@dankrause](//www.github.com/dankrause) whose [python
+  code](//gist.github.com/dankrause/5585907) served as the basis for this.
