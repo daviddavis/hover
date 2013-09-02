@@ -1,0 +1,43 @@
+#!/usr/bin/env ruby
+
+#
+# DNS update
+# Example script for updating hover domains
+#
+# This should be pretty self explanatory. Domains should
+# just be in the format www.google.com or so. Also, this
+# requires curl if you don't set IP_ADDRESS in your env.
+#
+
+require 'rubygems'
+require 'hover'
+
+current_ip = ENV['IP_ADDRESS'] || %x{curl icanhazip.com}
+username = ENV['HOVER_USER'] or fail "No hover username supplied"
+password = ENV['HOVER_PASS'] or fail "No hover password supplied"
+domains = ENV['HOVER_DOMAINS'].split(",") or fail "No hover domains supplied"
+
+$api = Hover::Api.new(username, password)
+
+def update_domain(full_name, ip)
+  subdomain = full_name[/^[^.]*/, 0]
+  domain_name = full_name[/^[^.]*\.(.*)$/, 1]
+
+  domains = $api.dns
+  domains.each do |domain|
+    if domain["domain_name"] == domain_name
+      domain["entries"].each do |entry|
+        next if entry["type"] != "A"
+
+        if entry["name"] == subdomain
+          dns_id = entry["id"]
+          $api.update_record(dns_id, {content: ip})
+        end
+      end
+    end
+  end
+end
+
+domains.each do |domain|
+  update_domain(domain, current_ip)
+end
