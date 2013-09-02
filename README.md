@@ -28,6 +28,10 @@ Fire up irb and you're good to go:
 # Hash with domains
 ```
 
+## Dynamically updating your DNS records
+
+See the [example script included in the project](script/dns).
+
 ## Contributing
 
 1. Fork it
