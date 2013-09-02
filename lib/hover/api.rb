@@ -18,7 +18,7 @@ module Hover
 
     def authenticate(username, password)
       auth = {username: username, password: password}
-      response = RestClient.post(AUTH_URL, auth) do |response, request, result|
+      RestClient.post(AUTH_URL, auth) do |response, request, result|
         if response.code == 302
           return response.cookies["hoverauth"]
         else
@@ -54,7 +54,7 @@ module Hover
     end
 
     def update_record(id, params={})
-      response = get("dns/#{id}", params)
+      response = put("dns/#{id}", params)
       JSON.parse(response)
     end
 
