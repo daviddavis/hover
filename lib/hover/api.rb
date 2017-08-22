@@ -4,7 +4,7 @@ require 'json'
 module Hover
   class Api
     URL = 'https://www.hover.com/api/'
-    AUTH_URL = 'https://www.hover.com/signin'
+    AUTH_URL = 'https://www.hover.com/api/login'
 
     attr_accessor :client, :username, :password
 
@@ -19,7 +19,7 @@ module Hover
     def authenticate(username, password)
       auth = {username: username, password: password}
       RestClient.post(AUTH_URL, auth) do |response, request, result|
-        if response.code == 302
+        if [302,200].include?(response.code)
           return response.cookies["hoverauth"]
         else
           raise "Failed to authenticate"
